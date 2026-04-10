@@ -11,10 +11,12 @@ export const uploadFile = async (file: File): Promise<ApiResponse> => {
     body: formData,
   });
 
-  const data = await response.json(); // ← read ONCE
+  const data = await response.json(); 
+
+  console.log(data)
 
   if (!response.ok) {
-    throw new Error(data.message || "Upload failed"); // ← reuse same data
+    throw new Error(data.message || "Upload failed");
   }
 
   console.log(data);

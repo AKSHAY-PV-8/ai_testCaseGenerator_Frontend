@@ -3,6 +3,8 @@ import type { ApiResponse } from "../types";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
+console.log("base URL....", BASE_URL)
+
 
 // "http://localhost:5000";
 

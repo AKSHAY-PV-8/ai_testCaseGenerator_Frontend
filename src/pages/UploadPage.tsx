@@ -51,15 +51,12 @@ export default function UploadPage({ onResult }: Props) {
     setError(null);
     setStepIndex(0);
 
-    // Simulate step logging
     const stepDelay = (ms: number) =>
       new Promise((res) => setTimeout(res, ms));
 
     try {
-      // Kick off real request
       const requestPromise = uploadFile(file);
 
-      // Animate steps while waiting
       for (let i = 0; i < STEPS.length; i++) {
         setStepIndex(i);
         addLog(`[${new Date().toLocaleTimeString()}] ${STEPS[i]}`);
@@ -67,13 +64,13 @@ export default function UploadPage({ onResult }: Props) {
       }
 
       const data = await requestPromise;
-      addLog(`[${new Date().toLocaleTimeString()}] ✓ Done! ${data.result.summary.total} tests generated.`);
+      addLog(`[${new Date().toLocaleTimeString()}]  Done! ${data.result.summary.total} tests generated.`);
       await stepDelay(600);
       onResult(data.result, data.testCases);
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "Something went wrong.";
       setError(errorMessage);
-      addLog(`[${new Date().toLocaleTimeString()}] ✗ Error: ${errorMessage}`);
+      addLog(`[${new Date().toLocaleTimeString()}]  Error: ${errorMessage}`);
     } finally {
       setLoading(false);
     }
@@ -92,8 +89,9 @@ export default function UploadPage({ onResult }: Props) {
       />
 
       {/* Glow blobs */}
-      <div className="absolute top-[-200px] left-[-200px] w-[600px] h-[600px] rounded-full bg-[#00ff88] opacity-[0.04] blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-200px] right-[-200px] w-[500px] h-[500px] rounded-full bg-[#0088ff] opacity-[0.05] blur-[120px] pointer-events-none" />
+      <div className="absolute -top-50 -left-50 w-150 h-150 rounded-full bg-[#00ff88] opacity-[0.04] blur-[120px] pointer-events-none" />
+      <div className="absolute -bottom-50 -right-50 w-125
+       h-125 rounded-full bg-[#0088ff] opacity-[0.05] blur-[120px] pointer-events-none" />
 
       {/* Header */}
       <header className="relative z-10 border-b border-white/5 px-8 py-5 flex items-center justify-between">
@@ -160,7 +158,7 @@ export default function UploadPage({ onResult }: Props) {
                 ? "border-[#00ff88] bg-[#00ff88]/10 scale-[1.02]"
                 : file
                 ? "border-[#00ff88]/50 bg-[#00ff88]/5"
-                : "border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04]"
+                : "border-white/10 bg-white/2 hover:border-white/20 hover:bg-white/4"
               }
               ${loading ? "pointer-events-none" : ""}
             `}
@@ -278,7 +276,7 @@ export default function UploadPage({ onResult }: Props) {
           ].map((f) => (
             <span
               key={f}
-              className="px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] text-white/40 text-xs tracking-wide"
+              className="px-4 py-2 rounded-full border border-white/10 bg-white/3 text-white/40 text-xs tracking-wide"
             >
               {f}
             </span>
